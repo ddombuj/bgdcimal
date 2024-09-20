@@ -16,5 +16,6 @@ public class BasicArithmetic {
         System.out.println("Difference: " + difference);// Output: 6.3
         System.out.println("Product: " + product);      // Output: 44.10
         System.out.println("Quotient: " + quotient);    // Output: 2.50
+          
     }
 }
