@@ -64,7 +64,7 @@ public class PagosPrestamos {
 
         //Calculamos el divisor
         BigDecimal divisor = BigDecimal.ONE.add(interes);
-        divisor = divisor.pow(-meses, MathContext.DECIMAL64); // Eleva al exponente positivo
+        divisor = divisor.pow(-meses, MathContext.DECIMAL128); // Eleva al exponente positivo
         divisor = BigDecimal.ONE.subtract(divisor); //0.7762
 
         //Realizamos la operacion final (dividendo/divisor)
