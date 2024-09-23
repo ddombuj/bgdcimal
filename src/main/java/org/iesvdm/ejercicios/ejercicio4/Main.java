@@ -1,9 +1,15 @@
 package org.iesvdm.ejercicios.ejercicio4;
 
-public class Main {
-    Posicion igualada = new Posicion(41.57879F,  1.617221F);
-    Posicion granada = new Posicion(37.176487F, -3.597929F);
+import java.math.BigDecimal;
 
-    float distancia = 
+public class Main {
+    public static void main(String[] args) {
+        Posicion igualada = new Posicion(BigDecimal.valueOf(41.57879),  BigDecimal.valueOf(1.617221));
+        Posicion granada = new Posicion(BigDecimal.valueOf(37.176487), BigDecimal.valueOf(-3.597929));
+    
+        BigDecimal distancia = Posicion.DistanciaKm(igualada, granada);  
+        System.out.println(distancia);  
+    }
+    
 }
 
