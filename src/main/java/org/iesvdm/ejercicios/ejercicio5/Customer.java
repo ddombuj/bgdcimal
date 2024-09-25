@@ -10,6 +10,7 @@ public class Customer {
     private Phone phone;
     private String email;
     private WebUser webUser;
+    private Account account;
 
 
     //Constructor
@@ -60,5 +61,13 @@ public class Customer {
 
     public void setWebUser(WebUser webUser) {
         this.webUser = webUser;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

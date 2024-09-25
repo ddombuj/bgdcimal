@@ -69,5 +69,14 @@ public class ShoppingCart {
         throw new IllegalArgumentException("Artículo no encontrado en el carrito");
     }
 
+    public boolean containsProduct(Product product) {
+        for (LineItem lineItem : lineItems) {
+            if (product.equals(lineItem.getProduct())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

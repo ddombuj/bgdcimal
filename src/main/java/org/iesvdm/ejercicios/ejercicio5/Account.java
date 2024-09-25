@@ -16,7 +16,7 @@ public class Account {
     private Customer customer;
     private ShoppingCart shoppingCart;
     private Order order;
-    private Payment payment;
+    private final List<Payment> payments = new ArrayList<>(); // Lista ordenada de payments
     private final List<Order> orders = new ArrayList<>(); // Lista ordenada de orders
 
 
@@ -98,12 +98,8 @@ public class Account {
         this.order = order;
     }
 
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
+    public List<Payment> getPayments() {
+        return payments;
     }
 
     public List<Order> getOrders() {
@@ -115,6 +111,13 @@ public class Account {
         // Verificar si el order ya existe en la lista
         if (!orders.contains(order)) {
             orders.add(order);
+        }
+    }
+
+    public void addPayment(Payment payment) {
+        // Verificar si el payment ya existe en la lista
+        if (!payments.contains(payment)) {
+            payments.add(payment);
         }
     }
 }

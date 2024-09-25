@@ -11,9 +11,9 @@ public class LineItem {
     private Order order;
 
     //Constructor
-    public LineItem(Integer quantity, Price price, ShoppingCart shoppingCart, Product product, Order order) {
+    public LineItem(Integer quantity, ShoppingCart shoppingCart, Product product, Order order) {
         this.quantity = quantity;
-        this.price = price;
+        this.price = new Price(product.getPrice().getValor() * quantity);
         this.shoppingCart = shoppingCart;
         this.product = product;
         this.order = order;
