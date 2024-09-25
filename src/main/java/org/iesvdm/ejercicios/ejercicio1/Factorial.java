@@ -7,18 +7,22 @@ public class Factorial {
 
     public static void main(String[] args) {
         //Hacemos la llamada al metodo y lo mostramos por pantalla
-        BigInteger n = new BigInteger("7");
-        System.out.println(factorial(n));
+        BigInteger initialNumber = new BigInteger("7");
+        System.out.println(factorial(initialNumber));
     }
 
-    public static BigInteger factorial(BigInteger n) {
-        BigInteger result = BigInteger.ONE;
-        while(n.compareTo(BigInteger.ZERO) > 0){
-            result = result.multiply(n);
-            n = n.subtract(BigInteger.ONE);
+
+    /**
+     * Creamos el metodo estatico que se encargará de calcular el factorial del número que le pasemos como parámetro
+     */
+    public static BigInteger factorial(BigInteger number) {
+        BigInteger result = BigInteger.ONE; //Inicializamos el resultado
+        while(number.compareTo(BigInteger.ZERO) > 0){ //Mientras sea posible factorizar | el numero dado sea mayor a 0
+            result = result.multiply(number); //Se multiplica el resultado que teniamos almacenado por el siguiente numero
+            number = number.subtract(BigInteger.ONE); //Restamos 1 al numero dado para pasar al siguiente numero más pequeño
         }
 
-        return result;
+        return result; //Retornamos el resultado
     }
 }
 

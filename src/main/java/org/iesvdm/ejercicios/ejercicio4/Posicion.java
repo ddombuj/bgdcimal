@@ -5,18 +5,18 @@ import java.math.MathContext;
 
 public class Posicion {
 
-    //Atributtes
-    private BigDecimal latitud;
-    private BigDecimal longitud;
-    public final static BigDecimal RADIOTIERRAKM = new BigDecimal(6378);
+    // Atributos
+    private BigDecimal latitud; // Coordenada de latitud
+    private BigDecimal longitud; // Coordenada de longitud
+    public final static BigDecimal RADIO_TIERRA_KM = new BigDecimal(6378); // Radio de la Tierra en kilómetros
 
-    //Constructor
-    public Posicion(BigDecimal latitud, BigDecimal longitud){
+    // Constructor
+    public Posicion(BigDecimal latitud, BigDecimal longitud) {
         this.latitud = latitud;
         this.longitud = longitud;
     }
 
-    //Getters & Setters
+    // Getters & Setters
     public BigDecimal getLatitud() {
         return latitud;
     }
@@ -33,43 +33,49 @@ public class Posicion {
         this.longitud = longitud;
     }
 
+    // Métodos
 
-    //Methods
+    /**
+     * Método para calcular la distancia en km entre dos posiciones
+     * @param posOrigen Posición de origen
+     * @param posDestino Posición de destino
+     * @return Distancia en kilómetros
+     */
+    public static BigDecimal calcularDistanciaKm(Posicion posOrigen, Posicion posDestino) {
+        // Calculamos la diferencia entre latitudes y longitudes en radianes
+        BigDecimal diferenciaLatitudes = enRadianes(posDestino.latitud.subtract(posOrigen.latitud));
+        BigDecimal diferenciaLongitudes = enRadianes(posDestino.longitud.subtract(posOrigen.longitud));
 
-    //Method to calculate the distance between tho places
-    public static BigDecimal DistanciaKm(Posicion posOrigen, Posicion posDestino){
-        //Calculate the difference between latittude and longittude
-        BigDecimal diferenciaLats = enRadianes(posOrigen.latitud.subtract(posDestino.latitud));
-        BigDecimal diferenciaLongs = enRadianes(posOrigen.longitud.subtract(posDestino.longitud));
+        // Calculamos la mitad del cuadrado de la distancia en línea recta
+        // Convertimos todos los BigDecimal a double para hacer cálculos trigonométricos
+        double mediaDiferenciaLat = (diferenciaLatitudes.divide(BigDecimal.TWO, MathContext.DECIMAL128)).doubleValue();
+        double latitudOrigenRad = (enRadianes(posOrigen.latitud)).doubleValue();
+        double latitudDestinoRad = (enRadianes(posDestino.latitud)).doubleValue();
+        double mediaDiferenciaLon = (diferenciaLongitudes.divide(BigDecimal.TWO, MathContext.DECIMAL128)).doubleValue();
 
-        //Calculate the half of the square of the distance in a straight line
-            //COnvert all BigDecimal to Double, calculate, then convert them to BigDecimal
-        double difLat = (diferenciaLats.divide(BigDecimal.TWO, MathContext.DECIMAL128)).doubleValue();
-        double origenLatRad = (enRadianes(posOrigen.latitud)).doubleValue();
-        double destinoLatRad = (enRadianes(posDestino.latitud)).doubleValue();
-        double difLon = (diferenciaLongs.divide(BigDecimal.TWO, MathContext.DECIMAL128)).doubleValue();
+        // Aplicamos la fórmula del cálculo de la distancia Haversine
+        double distanciaHaversine = alCuadrado(Math.sin(mediaDiferenciaLat))
+                + (Math.cos(latitudOrigenRad))
+                * (Math.cos(latitudDestinoRad))
+                * alCuadrado(Math.sin(mediaDiferenciaLon));
 
-        double a = alCuadrado(Math.sin(difLat))
-                + (Math.cos(origenLatRad))
-                * (Math.cos(destinoLatRad))
-                * alCuadrado(Math.sin(difLon));
-        
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        // Calculamos el ángulo central
+        double anguloCentral = 2 * Math.atan2(Math.sqrt(distanciaHaversine), Math.sqrt(1 - distanciaHaversine));
 
-        BigDecimal newC = BigDecimal.valueOf(c);
+        // Convertimos el resultado a BigDecimal
+        BigDecimal newAnguloCentral = BigDecimal.valueOf(anguloCentral);
 
-        return RADIOTIERRAKM.multiply(newC, MathContext.DECIMAL128);
+        // Devolvemos la distancia multiplicada por el radio de la Tierra
+        return RADIO_TIERRA_KM.multiply(newAnguloCentral, MathContext.DECIMAL128);
     }
 
-    //Method to calculate a number in radians
-    private static BigDecimal enRadianes(BigDecimal valor){
-        return valor.multiply(new BigDecimal(Math.PI/180), MathContext.DECIMAL128);
+    // Método para convertir un valor en grados a radianes
+    private static BigDecimal enRadianes(BigDecimal valor) {
+        return valor.multiply(new BigDecimal(Math.PI / 180), MathContext.DECIMAL128);
     }
 
-    //Method to calculate the square 2
-    public static double alCuadrado(double valor){
+    // Método para elevar un número al cuadrado
+    public static double alCuadrado(double valor) {
         return Math.pow(valor, 2);
     }
-
-    
 }
