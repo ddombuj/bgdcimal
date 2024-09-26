@@ -6,13 +6,13 @@ public class WebUser {
     private String password;
     private UserState state;
     private Customer customer;
-    private WebUser webUser;
 
-    //Constructor
-    public WebUser(String loginId, String password, UserState state) {
+    //Constructor - con el objeto Customer como parametro, ya que es una relacion unidireccional
+    public WebUser(String loginId, String password, UserState state, Customer customer) {
         this.login_id = loginId;
         this.password = password;
         this.state = state;
+        this.customer = customer;
     }
 
     //Getters y setters
@@ -46,13 +46,5 @@ public class WebUser {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    public WebUser getWebUser() {
-        return webUser;
-    }
-
-    public void setWebUser(WebUser webUser) {
-        this.webUser = webUser;
     }
 }

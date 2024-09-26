@@ -5,6 +5,7 @@ import org.iesvdm.ejercicios.ejercicio5.auxClasses.Real;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 public class Order {
@@ -16,8 +17,8 @@ public class Order {
     private OrderStatus status;
     private Real total;
     private Account account;
-    private final List<LineItem> lineItems = new ArrayList<>(); // Lista ordenada de LineItems
-    private final List<Payment> payments = new ArrayList<>(); // Lista ordenada de payments
+    private final LinkedHashSet<LineItem> lineItems;
+    private final LinkedHashSet<Payment> payments;
 
 
     //Constructor
@@ -29,6 +30,8 @@ public class Order {
         this.status = status;
         this.total = total;
         this.account = account;
+        this.lineItems = new LinkedHashSet<>();
+        this.payments = new LinkedHashSet<>();
     }
 
     //Getters y setters
@@ -88,13 +91,17 @@ public class Order {
         this.account = account;
     }
 
+    //Metodo para obtener la lista de lineItems
     public List<LineItem> getLineItems() {
-        return lineItems;
+        return new ArrayList<>(lineItems);
     }
 
+
+    //Metodo para obtener la lista de payments
     public List<Payment> getPayments() {
-        return payments;
+        return new ArrayList<>(payments);
     }
+
 
     //Metodos
     public void addLineItem(LineItem item) {
@@ -118,9 +125,6 @@ public class Order {
     }
 
     public void addPayment(Payment payment) {
-        // Verificar si el item ya existe en la lista
-        if (!payments.contains(payment)) {
-            payments.add(payment);
-        }
+        payments.add(payment);
     }
 }

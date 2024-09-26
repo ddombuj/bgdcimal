@@ -9,8 +9,7 @@ public class Customer {
     private Address address;
     private Phone phone;
     private String email;
-    private WebUser webUser;
-    private Account account;
+    private Account account; //En clase Account no hay referencia a Customer por su relacion de composición
 
 
     //Constructor
@@ -52,15 +51,6 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    //Atributos que son opcionales y/o no estan incluidos en el constructor
-    public WebUser getWebUser() {
-        return webUser;
-    }
-
-    public void setWebUser(WebUser webUser) {
-        this.webUser = webUser;
     }
 
     public Account getAccount() {

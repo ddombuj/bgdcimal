@@ -2,6 +2,7 @@ package org.iesvdm.ejercicios.ejercicio5;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 public class ShoppingCart {
@@ -9,7 +10,7 @@ public class ShoppingCart {
     private Date created;
     private Account account;
     private WebUser webUser;
-    private final List<LineItem> lineItems = new ArrayList<>(); // Lista ordenada de LineItems
+    private final LinkedHashSet<LineItem> lineItems; // Lista ordenada de LineItems
 
 
     //Constructor
@@ -17,6 +18,7 @@ public class ShoppingCart {
         this.created = created;
         this.account = account;
         this.webUser = webUser;
+        this.lineItems = new LinkedHashSet<>();
     }
 
     //Getters y setters
@@ -45,7 +47,7 @@ public class ShoppingCart {
     }
 
     public List<LineItem> getLineItems() {
-        return lineItems;
+        return new ArrayList<>(lineItems);
     }
 
     //Metodos

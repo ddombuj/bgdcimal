@@ -7,8 +7,8 @@ public class Real {
     private BigDecimal value;
 
     //Constructores
-    public Real(double value) {
-        this.value = BigDecimal.valueOf(value);
+    public Real(BigDecimal value) {
+        this.value = value;
     }
 
     public Real(String value) {

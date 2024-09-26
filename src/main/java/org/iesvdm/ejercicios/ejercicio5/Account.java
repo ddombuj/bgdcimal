@@ -4,6 +4,7 @@ import org.iesvdm.ejercicios.ejercicio5.auxClasses.Address;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 public class Account {
@@ -13,11 +14,12 @@ public class Account {
     private boolean is_closed;
     private Date open;
     private Date closed;
-    private Customer customer;
+    //Un account tiene un shopping cart
     private ShoppingCart shoppingCart;
-    private Order order;
-    private final List<Payment> payments = new ArrayList<>(); // Lista ordenada de payments
-    private final List<Order> orders = new ArrayList<>(); // Lista ordenada de orders
+    //Un account tiene una lista de orders
+    private final LinkedHashSet<Order> orders;
+    // Un Account puede tener 0 o más Payments
+    private final List<Payment> payments;
 
 
     //Constructor
@@ -27,6 +29,8 @@ public class Account {
         this.is_closed = is_closed;
         this.open = open;
         this.closed = closed;
+        this.orders = new LinkedHashSet<>();
+        this.payments = new ArrayList<>();
     }
 
 
@@ -72,15 +76,8 @@ public class Account {
     }
 
 
-    //Atributos que son opcionales y/o no estan incluidos en el constructor
 
-    public Customer getCustomer() {
-        return customer;
-    }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
@@ -90,34 +87,24 @@ public class Account {
         this.shoppingCart = shoppingCart;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
     public List<Payment> getPayments() {
         return payments;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    //Metodos
-    public void addOrder(Order order) {
-        // Verificar si el order ya existe en la lista
-        if (!orders.contains(order)) {
-            orders.add(order);
-        }
-    }
-
     public void addPayment(Payment payment) {
-        // Verificar si el payment ya existe en la lista
-        if (!payments.contains(payment)) {
-            payments.add(payment);
-        }
+        this.payments.add(payment);
+        payment.setAccount(this);
     }
+
+
+    //Metodo para obtener la lista de orders
+    public List<Order> getOrders() {
+        return new ArrayList<>(orders);
+    }
+
+    //Metodo que añade un order
+    public void addOrder(Order order) {
+        orders.add(order);
+    }
+
 }

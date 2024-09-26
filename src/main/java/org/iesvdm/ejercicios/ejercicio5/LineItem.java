@@ -2,6 +2,8 @@ package org.iesvdm.ejercicios.ejercicio5;
 
 import org.iesvdm.ejercicios.ejercicio5.auxClasses.Price;
 
+import java.math.BigDecimal;
+
 public class LineItem {
     //Atributos
     private Integer quantity;
@@ -13,7 +15,7 @@ public class LineItem {
     //Constructor
     public LineItem(Integer quantity, ShoppingCart shoppingCart, Product product, Order order) {
         this.quantity = quantity;
-        this.price = new Price(product.getPrice().getValor() * quantity);
+        this.price = new Price(product.getPrice().getValor().multiply(BigDecimal.valueOf(quantity))); //Calculamos el precio (cantidad * valor)
         this.shoppingCart = shoppingCart;
         this.product = product;
         this.order = order;

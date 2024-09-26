@@ -1,28 +1,44 @@
 package org.iesvdm.ejercicios.ejercicio5.auxClasses;
 
-public class Price {
-    //Atributos
-    private double valor;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-    //Constructor, verificando que sea positivo
-    public Price(double valor) {
-        if (valor < 0) {
+public class Price {
+    // Atributos
+    private BigDecimal valor;
+
+    // Constructor, verificando que sea positivo
+    public Price(BigDecimal valor) {
+        if (valor.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("El precio no puede ser negativo");
         }
-        this.valor = valor;
+        this.valor = valor.setScale(2, RoundingMode.HALF_UP);  // Redondeo a dos decimales
     }
 
-    //Getters y setters
-    public double getValor() {
+    // Constructor que acepta double
+    public Price(double valor) {
+        this(BigDecimal.valueOf(valor));  // Convierte el double a BigDecimal y usa el otro constructor
+    }
+
+    // Getters y setters
+    public BigDecimal getValor() {
         return valor;
     }
-    public void setValor(double valor) {
-        this.valor = valor;
+
+    public void setValor(BigDecimal valor) {
+        if (valor.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo");
+        }
+        this.valor = valor.setScale(2, RoundingMode.HALF_UP);  // Redondeo a dos decimales
     }
 
-    //Metodo para formatear salida
+    public void setValor(double valor) {
+        setValor(BigDecimal.valueOf(valor));
+    }
+
+    // Método para formatear salida
     @Override
     public String toString() {
-        return String.format("%.2f", valor); // Formateamos el precio con dos decimales
+        return valor.setScale(2, RoundingMode.HALF_UP).toString();  // Formateamos el precio con dos decimales
     }
 }
